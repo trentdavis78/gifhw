@@ -1,3 +1,36 @@
-.bg-theme {
+body {
     background: #141414;
+    font-family: 'Martel Sans', sans-serif;
+}
+.logo, #searchBox  {
+    padding: 16px 0px;
+}
+.logo {
+    padding-left: 20px;
+}
+#searchBox input, #searchButton {
+    background: #000;
+    color: #fff;
+    height: 34px;
+    border: 1px solid #fff;
+    
+}
+.form-control:focus {
+    box-shadow: none;
+    border: inherit;
+}
+.explore span {
+    color: grey;
+    display: inline;
+    
+}
+.explore ul, .explore ul li {
+    display: inline;
+    padding: 0 .5rem;   
+}
+.explore ul li {
+    color: #fff;      
+}
+.explore li {
+    border-right: 1px solid grey;
 }
