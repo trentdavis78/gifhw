@@ -1,18 +1,24 @@
 $(document).ready(function () {
   var api = "EFpmfS0tkulMhfgMKidEgbG0MutwWY6A";
-  var query = "netflix";
+  var query = "bird box";
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     query + "&limit=10&api_key=" + api;
-
+  var categoryArray = ["Movies", "Television", "Music", "Sports", "Geography", "Animals"];
+  function printCategories(arr){
+    for(i=0;i<arr.length;i++){
+      newLi = $("<li>");
+      newLi.text(arr[i]);
+      newLi.attr("data-array-index", i)
+      $("#exploreUl").append(newLi);
+    }
+  }
+  printCategories(categoryArray);
   $.ajax({
     url: queryURL,
     method: "GET"
   })
     // After data comes back from the request
     .then(function (response) {
-      console.log(queryURL);
-
-      console.log(response);
       // storing the data from the AJAX request in the results variable
       var results = response.data;
 
@@ -44,6 +50,7 @@ $(document).ready(function () {
         $("#gifRow1").prepend(newLi);
       }
     });
+  // mouse hover effects 
   $(document.body).on('mouseenter', '.newImgs', function () {
     $(this).addClass('transition');
     newSrc = $(this).attr("data-animated");
@@ -54,5 +61,20 @@ $(document).ready(function () {
     newSrc = $(this).attr("data-still");
     $(this).attr("src", newSrc)
   });
+  // search button 
+  $("#searchButton").on("click", function(){
+      var value = $("#searchField").val();
+      categoryArray.push(value);
+      $("#exploreUl").empty();
+      printCategories(categoryArray)
+      $("#searchField").val("")
+  });
+  // search field Enter
+  $("#searchField").on('keypress',function(e) {    
+        if(e.which == 13) {
+            e.preventDefault();
+            $("#searchButton").click();  
+        }
+    });
 
 });

@@ -15,13 +15,14 @@ body {
     position: relative;
     top: 4px;
 }
-#searchBox input, #searchButton {
+#searchBox input, #searchBox input:focus, #searchButton {
     background: #000;
     color: #fff;
     height: 34px;
     border: 1px solid #fff;
     
 }
+
 .form-control:focus {
     box-shadow: none;
     border: inherit;
@@ -35,8 +36,9 @@ body {
 .explore span {
     padding-left: 0;
 }
-.explore ul li a {
+.explore ul li {
     color: #fff;      
+    text-transform: capitalize;
 }
 .explore li {
     border-right: 1px solid grey;   
@@ -44,9 +46,10 @@ body {
 .explore li:last-child {
     border: none;
 }
-.explore ul li a:hover {
+.explore ul li:hover {
     color: #E50914;
     text-decoration: none;
+    cursor: pointer;
 }
 .row-title h4 {
     color: #e4e4e4;
