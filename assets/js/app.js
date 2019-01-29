@@ -27,11 +27,13 @@ $(document).ready(function () {
             titleRow += '<div class="col-12 row-title">';
             titleRow += '<h4>' + query + '</h4>';
             titleRow +=  '</div></div>';
-            
+        var newSection = $("<section id='" + query + "'>");
+            newSection.addClass("center slider");
+
         // Looping through each result item
         for (var i = 0; i < results.length; i++) {
           var newDiv = $("<div>");
-          newDiv.addClass("d-inline pr-1");
+          newDiv.addClass("pr-1");
           var newImg = $("<img>");
           newImg.attr("data-still", results[i].images.fixed_height_still.url);
           newImg.attr("data-animated", results[i].images.fixed_height.url);
@@ -40,11 +42,22 @@ $(document).ready(function () {
           newImg.addClass("newImgs");
           newDiv.append(newImg);
           
-          $("#gifWrapper").prepend(newDiv);
+          $(newSection).prepend(newDiv);
           
         }
+        $(newSection).slick({
+          
+          infinite: true,
+          speed: 300,
+          slidesToShow: 1,
+          variableWidth: true
+        });
+        
+        $("#gifWrapper").prepend(newSection);
         $("#gifWrapper").prepend(titleRow);
+        
       });
+      
   }
   // mouse hover effects 
   $(document.body).on('mouseenter', '.newImgs', function () {

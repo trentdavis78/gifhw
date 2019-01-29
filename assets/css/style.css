@@ -1,6 +1,7 @@
 body {
     background: #141414;
     font-family: 'Martel Sans', sans-serif;
+    overflow-x: hidden;
 }
 .px4pc {
     padding: 0 4%;
@@ -59,25 +60,134 @@ body {
     text-transform: capitalize;
     font-weight: 600;
 }
-#gifWrapper {
+/* #gifWrapper {
     display: inline-block;
     white-space: nowrap;
-}
+} */
 
 .transition {
     -webkit-transform: scale(1.3); 
     -moz-transform: scale(1.3);
     -o-transform: scale(1.3);
     transform: scale(1.3);
+    
 }
-.d-inline img {
+.slick-slide img {
     -webkit-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;
     -ms-transition: all .4s ease-in-out;
-    cursor: pointer; 
+    cursor: pointer;     
+}
+.slick-list {
+    overflow: visible;
 }
 .fa-chevron-right, .fa-chevron-left {
     color: #fff;
     font-size: 40px;
+}
+
+/* Arrows */
+.slick-prev,
+.slick-next
+{
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 50%;
+
+    display: block;
+
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    cursor: pointer;
+
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    z-index: 9999;
+}
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus
+{
+    color: transparent;
+    outline: none;
+    background: transparent;
+}
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before
+{
+    opacity: 1;
+}
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before
+{
+    opacity: .25;
+}
+
+.slick-prev:before,
+.slick-next:before
+{
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+
+    opacity: .75;
+    color: white;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev, .slick-prev:hover, .slick-prev:focus
+{
+    left: 0;
+    background: #000;
+    height: 200px;
+    padding: 2rem;
+    opacity: .75;
+}
+
+.slick-prev:before
+{
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "\f104";
+    z-index: 999;
+    font-size: 4rem;
+    position: relative;
+    right: 20px;
+}
+
+
+.slick-next, .slick-next:hover, .slick-next:focus
+{
+    right: 0;
+    background: #000;
+    height: 200px;
+    padding: 2rem;
+    opacity: .75;
+}
+
+.slick-next:before
+{
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    content: "\f105";
+    z-index: 999;
+    font-size: 4rem;
+    position: relative;
+    right: 10px;
+    
 }
