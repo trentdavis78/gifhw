@@ -60,23 +60,23 @@ $(document).ready(function () {
       
   }
   // mouse hover effects 
-  $(document.body).on('mouseenter', '.newImgs', function () {
+  $(document.body).on('mouseenter', '.newImgs', function () {       
     $(this).addClass('transition');
     newSrc = $(this).attr("data-animated");
-    $(this).attr("src", newSrc)
+    $(this).attr("src", newSrc);   
   });
-  $(document.body).on('mouseleave', '.newImgs', function () {
+  $(document.body).on('mouseleave', '.newImgs', function () {    
     $(this).removeClass('transition');
     newSrc = $(this).attr("data-still");
-    $(this).attr("src", newSrc)
-  });
+    $(this).attr("src", newSrc);    
+  });  
   // search button 
   $("#searchButton").on("click", function () {
     var value = $("#searchField").val();
     categoryArray.push(value);
     $("#exploreUl").empty();
     printCategories(categoryArray)
-    $("#searchField").val("")
+    $("#searchField").val("");
     queryAPI(value);
   });
   // search field Enter
@@ -87,6 +87,11 @@ $(document).ready(function () {
     }
   });
   // initialize 
-  printCategories(categoryArray);
-  queryAPI(initQuery);
+  function initCategories() {
+    for(i=0;i<categoryArray.length;i++){
+      queryAPI(categoryArray[i]);
+    }
+  }
+  initCategories();
+  printCategories(categoryArray);    
 });
