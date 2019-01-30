@@ -133,8 +133,10 @@ $(document).ready(function () {
     // After data comes back from the request
     .then(function (response) { 
       var result = response.data;
+      var title = cleanTitle(result.title);
       console.log(result);
-      var fssMCHtml = "<img src='" + result.images.original.url+ "'>";
+      var fssMCHtml = "<div id='fssMCDesc'><h1>" + title +"</h1></div>"
+          fssMCHtml += "<div id='fssMCImg'><div id='ImgGradient'></div><img src='" + result.images.original.url+ "'></div>";
       $("#" + sectionID + "FS").find("#fssMainContent").html(fssMCHtml);
     });
     
