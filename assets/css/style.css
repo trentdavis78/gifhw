@@ -259,6 +259,7 @@ body {
 #fssMCDesc {
     float: left;
     padding: 2rem;
+    position: absolute;
 }
 #fssMCDesc h1 {
     text-transform: capitalize;
