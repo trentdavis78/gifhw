@@ -41,7 +41,13 @@ $(document).ready(function () {
           newImg.attr("src", stillSrc);
           newImg.addClass("newImgs");
           newDiv.append(newImg);
-          
+          var overlayDiv = $("<div>");
+          overlayDiv.addClass("overlayDiv");
+          var width =  results[i].images.fixed_height.width;
+          overlayDiv.css({"width": width});
+          console.log( results[i]);
+          overlayDiv.html("<a href='#'>" +  results[i].title + "</a>");
+          newDiv.append(overlayDiv);
           $(newSection).prepend(newDiv);
           
         }
@@ -60,16 +66,32 @@ $(document).ready(function () {
       
   }
   // mouse hover effects 
-  $(document.body).on('mouseenter', '.newImgs', function () {       
-    $(this).addClass('transition');
-    newSrc = $(this).attr("data-animated");
-    $(this).attr("src", newSrc);   
+  $(document.body).on('mouseenter', '.newImgs', function () {      
+   
+    // var width = $(this).width();
+    // $(this).siblings().css({"width": width});  
+    
+     
+  });
+  $(document.body).on('mouseenter', '.overlayDiv', function () {       
+    $(this).addClass('transition fadeIn');
+    $(this).siblings().addClass('transition');
+    newSrc = $(this).siblings().attr("data-animated");
+    $(this).siblings().attr("src", newSrc);    
+    
   });
   $(document.body).on('mouseleave', '.newImgs', function () {    
-    $(this).removeClass('transition');
-    newSrc = $(this).attr("data-still");
-    $(this).attr("src", newSrc);    
+   
+   
+   
   });  
+  $(document.body).on('mouseleave', '.overlayDiv', function () {       
+    $(this).removeClass('transition fadeIn');
+    $(this).siblings().removeClass('transition');
+    newSrc = $(this).siblings().attr("data-still");
+    $(this).siblings().attr("src", newSrc);        
+     
+  });
   // search button 
   $("#searchButton").on("click", function () {
     var value = $("#searchField").val();
