@@ -1,7 +1,5 @@
 $(document).ready(function () {
   var api = "EFpmfS0tkulMhfgMKidEgbG0MutwWY6A";
-  var initQuery = "bird box";
-
   var categoryArray = ["Movies", "Television", "Music", "Sports", "Geography", "Animals"];
   function printCategories(arr) {
     for (i = 0; i < arr.length; i++) {
@@ -27,8 +25,12 @@ $(document).ready(function () {
             titleRow += '<div class="col-12 row-title">';
             titleRow += '<h4>' + query + '</h4>';
             titleRow +=  '</div></div>';
-        var newSection = $("<section id='" + query + "'>");
-            newSection.addClass("center slider");
+        var sliderSection = $("<section id='" + query + "'>");
+            sliderSection.addClass("center slider");
+        var fullscreenSection = $("<section class='fullscreen' id='" + query + "FS'>");
+        var fssHtml = "<i data-section-id='" + query + "' class='fas fa-times'></i>";
+            fssHtml += "<div id='fssMainContent'></div>";
+            fullscreenSection.html(fssHtml);
 
         // Looping through each result item
         for (var i = 0; i < results.length; i++) {
@@ -45,45 +47,45 @@ $(document).ready(function () {
           overlayDiv.addClass("overlayDiv");
           var width =  results[i].images.fixed_height.width;
           overlayDiv.css({"width": width});
-          console.log( results[i]);
-          overlayDiv.html("<a href='#'>" +  results[i].title + "</a>");
+          var title = cleanTitle(results[i].title);
+          // console.log(results[i]);  
+          var html = "<div class='overlayContent'><h5>" + title + "</h5>";   
+          html += "<span class='maturity'>" +  results[i].rating  + "</span>";
+          html += "<svg class='down-arrow' data-gif-id='" + results[i].id + "' data-section-id='" + query + "' width='45px' height='15px'><polyline fill='none' stroke='#FFFFFF' stroke-width='1' stroke-miterlimit='10' points='0.846,1.404 21.783,13.537 42.833,1.404 '/></svg>";
+          html += "</div>";
+          overlayDiv.html(html);          
           newDiv.append(overlayDiv);
-          $(newSection).prepend(newDiv);
+          $(sliderSection).prepend(newDiv);
           
         }
-        $(newSection).slick({
-          
+        $(sliderSection).slick({          
           infinite: true,
           speed: 300,
           slidesToShow: 1,
           variableWidth: true
         });
-        
-        $("#gifWrapper").prepend(newSection);
+        $("#gifWrapper").prepend(fullscreenSection);
+        $("#gifWrapper").prepend(sliderSection);
         $("#gifWrapper").prepend(titleRow);
-        
+        // $("#" + query + "FS").fadeOut();        
       });
       
+  }  
+  // remove "GIF" and "By.." from Title
+  function cleanTitle(str) {
+    if(str.indexOf("by") > 0){
+      str = str.substr(0, str.lastIndexOf("by"));
+    }          
+    str = str.replace(/gif/gi, " ");
+    return str;
   }
   // mouse hover effects 
-  $(document.body).on('mouseenter', '.newImgs', function () {      
-   
-    // var width = $(this).width();
-    // $(this).siblings().css({"width": width});  
-    
-     
-  });
   $(document.body).on('mouseenter', '.overlayDiv', function () {       
     $(this).addClass('transition fadeIn');
     $(this).siblings().addClass('transition');
     newSrc = $(this).siblings().attr("data-animated");
     $(this).siblings().attr("src", newSrc);    
     
-  });
-  $(document.body).on('mouseleave', '.newImgs', function () {    
-   
-   
-   
   });  
   $(document.body).on('mouseleave', '.overlayDiv', function () {       
     $(this).removeClass('transition fadeIn');
@@ -91,6 +93,17 @@ $(document).ready(function () {
     newSrc = $(this).siblings().attr("data-still");
     $(this).siblings().attr("src", newSrc);        
      
+  });
+  $(document.body).on('click', '.down-arrow', function () {    
+    $(".fullscreen").fadeOut();
+    var gifID =  $(this).attr("data-gif-id");      
+    var sectionID = $(this).attr("data-section-id");    
+    fullscreenQuery(gifID, sectionID);
+    $("#" + sectionID + "FS").fadeIn();
+  });
+  $(document.body).on('click', '.fa-times', function () {           
+    var sectionID = $(this).attr("data-section-id");
+    $("#" + sectionID + "FS").fadeOut();
   });
   // search button 
   $("#searchButton").on("click", function () {
@@ -107,7 +120,25 @@ $(document).ready(function () {
       e.preventDefault();
       $("#searchButton").click();
     }
+  
   });
+  // fullscreen api call 
+  function fullscreenQuery(gifID, sectionID) {
+    var queryURL = "http://api.giphy.com/v1/gifs/" +
+    gifID + "?api_key=" + api;
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    // After data comes back from the request
+    .then(function (response) { 
+      var result = response.data;
+      console.log(result);
+      var fssMCHtml = "<img src='" + result.images.original.url+ "'>";
+      $("#" + sectionID + "FS").find("#fssMainContent").html(fssMCHtml);
+    });
+    
+  }
   // initialize 
   function initCategories() {
     for(i=0;i<categoryArray.length;i++){

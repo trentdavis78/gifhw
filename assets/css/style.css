@@ -188,6 +188,10 @@ body {
 
 .fadeIn:hover {
     opacity: 1;
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 47%, rgba(0,0,0,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 47%,rgba(0,0,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 47%,rgba(0,0,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
     }
 .overlayDiv {
     position: absolute;
@@ -201,5 +205,55 @@ body {
     cursor: pointer;
     color: #fff;
     opacity: 0;
-
+}
+.overlayContent {
+    position: absolute;
+    bottom: 0;
+    padding: .25rem .5rem;
+    width: inherit;
+}
+.overlayDiv h5 {
+    margin-bottom: 0;
+    text-transform: capitalize; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.maturity {
+    border: 1px solid #e5e5e5;
+    text-transform: uppercase;   
+    display: inline-block;    
+    line-height: 70%;
+    padding: .25rem .1rem .1rem;
+    margin: 0;
+}
+.down-arrow {
+    display: block;
+    margin: 0 auto 5px;
+}
+.down-arrow:hover polyline {
+    stroke: #E50914;
+    stroke-width: 3;
+}
+.fullscreen {
+    background: #000;
+    width: 100%;
+    height: 615px;
+    display: none;
+}
+.fa-times {
+    font-size: 3rem;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    right: 25px;
+}
+#fssMainContent {
+    color: #fff;
+}
+#fssMainContent img {
+    height: 615px;
+    float: right;
 }
