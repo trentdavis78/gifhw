@@ -124,7 +124,7 @@ $(document).ready(function () {
   });
   // fullscreen api call 
   function fullscreenQuery(gifID, sectionID) {
-    var queryURL = "http://api.giphy.com/v1/gifs/" +
+    var queryURL = "https://api.giphy.com/v1/gifs/" +
     gifID + "?api_key=" + api;
   $.ajax({
     url: queryURL,
