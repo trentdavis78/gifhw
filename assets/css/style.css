@@ -6,6 +6,10 @@ body {
 .px4pc {
     padding: 0 4%;
 }
+.fixed-top {
+    background: #141414;
+}
+
 .logo, #searchBox  {
     padding: 16px 0px;
 }
@@ -59,6 +63,9 @@ body {
     color: #e5e5e5;
     text-transform: capitalize;
     font-weight: 600;
+}
+#gifWrapper {
+    margin-top: 100px
 }
 .transition {
     -webkit-transform: scale(1.5); 
@@ -138,7 +145,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.slick-prev, .slick-prev:hover, .slick-prev:focus
+.slick-prev, .slick-prev:hover
 {
     left: 0;
     background: #000;
@@ -157,7 +164,7 @@ body {
     position: relative;
     right: 20px;
 }
-.slick-next, .slick-next:hover, .slick-next:focus
+.slick-next, .slick-next:hover
 {
     right: 0;
     background: #000;
@@ -298,4 +305,9 @@ body {
     background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(26,26,26,0) 10%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(26,26,26,0) 10%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
+.footer {
+    height: 250px;
+    max-width: 980px;
+    margin: 20px auto 0;
 }

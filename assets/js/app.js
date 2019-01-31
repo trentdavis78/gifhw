@@ -21,7 +21,7 @@ $(document).ready(function () {
         // storing the data from the AJAX request in the results variable
         var results = response.data;
         // write title to HTML
-        var titleRow =  '<div id="' + query + '" class="row px4pc mt-5">';
+        var titleRow =  '<div id="' + query + '" class="row px4pc pt-5">';
             titleRow += '<div class="col-12 row-title">';
             titleRow += '<h4>' + query + '</h4>';
             titleRow +=  '</div></div>';
@@ -104,7 +104,7 @@ $(document).ready(function () {
     $("#" + sectionID + "FS").fadeIn();
       $('html, body').animate({
         scrollTop: $("#" + sectionID).offset().top
-    }, 2000);
+    }, 500);
   });
   $(document.body).on('click', '.fa-times', function () {      
     $(".overlayDiv").removeClass("transitionDisable");   
@@ -114,9 +114,10 @@ $(document).ready(function () {
   });
   $(document.body).on('click', '#exploreUl li', function () {      
     var divId = $(this).text();
+    var targetOffset = $("#" + divId).offset().top - 60;
       $('html, body').animate({
-        scrollTop: $("#" + divId).offset().top
-    }, 2000);
+        scrollTop: targetOffset
+    }, 500);
   });
   // search button 
   $("#searchButton").on("click", function () {
