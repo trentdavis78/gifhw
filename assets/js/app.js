@@ -21,11 +21,11 @@ $(document).ready(function () {
         // storing the data from the AJAX request in the results variable
         var results = response.data;
         // write title to HTML
-        var titleRow =  '<div class="row px4pc mt-5">';
+        var titleRow =  '<div id="' + query + '" class="row px4pc mt-5">';
             titleRow += '<div class="col-12 row-title">';
             titleRow += '<h4>' + query + '</h4>';
             titleRow +=  '</div></div>';
-        var sliderSection = $("<section id='" + query + "'>");
+        var sliderSection = $("<section>");
             sliderSection.addClass("center slider");
         var fullscreenSection = $("<section class='fullscreen' id='" + query + "FS'>");
         var fssHtml = "<i data-section-id='" + query + "' class='fas fa-times'></i>";
@@ -102,12 +102,21 @@ $(document).ready(function () {
     var sectionID = $(this).attr("data-section-id");    
     fullscreenQuery(gifID, sectionID);
     $("#" + sectionID + "FS").fadeIn();
+      $('html, body').animate({
+        scrollTop: $("#" + sectionID).offset().top
+    }, 2000);
   });
   $(document.body).on('click', '.fa-times', function () {      
     $(".overlayDiv").removeClass("transitionDisable");   
     $(".slick-slide").removeClass("transitionDisable");      
     var sectionID = $(this).attr("data-section-id");
     $("#" + sectionID + "FS").fadeOut();
+  });
+  $(document.body).on('click', '#exploreUl li', function () {      
+    var divId = $(this).text();
+      $('html, body').animate({
+        scrollTop: $("#" + divId).offset().top
+    }, 2000);
   });
   // search button 
   $("#searchButton").on("click", function () {
