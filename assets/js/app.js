@@ -112,8 +112,9 @@ $(document).ready(function () {
     var sectionID = $(this).attr("data-section-id");    
     fullscreenQuery(gifID, sectionID);
     $("#" + sectionID + "FS").fadeIn();
+    var targetOffset = $("#" + sectionID ).offset().top + 200;
       $('html, body').animate({
-        scrollTop: $("#" + sectionID).offset().top
+        scrollTop: targetOffset
     }, 500);
   });
   $(document.body).on('click', '.fa-times', function () {      
