@@ -8,6 +8,7 @@ body {
 }
 .fixed-top {
     background: #141414;
+    z-index: 99999;
 }
 
 .logo, #searchBox  {
@@ -20,14 +21,15 @@ body {
     position: relative;
     top: 4px;
 }
-#searchBox input, #searchBox input:focus, #searchButton {
-    background: #000;
+#searchBox input, 
+#searchBox input:focus, 
+#searchButton
+{
+    background: #000 !important;
     color: #fff;
     height: 34px;
-    border: 1px solid #fff;
-    
-}
-
+    border: 1px solid #fff;    
+}    
 .form-control:focus {
     box-shadow: none;
     border: inherit;
@@ -246,6 +248,9 @@ body {
     padding: .25rem .1rem .1rem;
     margin: 0;
 }
+.fsMaturity {
+    padding: .5rem .25rem .1rem;
+}
 .down-arrow {
     display: block;
     margin: 0 auto 5px;
@@ -267,7 +272,8 @@ body {
     position: absolute;
     right: 25px;
     margin-top: 10px;
-    z-index: 9999;
+    z-index: 999;
+    text-shadow: #000 1px 1px 1px;
 }
 #fssMainContent {
     color: #fff;

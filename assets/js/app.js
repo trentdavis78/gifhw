@@ -5,13 +5,15 @@ $(document).ready(function () {
     for (i = 0; i < arr.length; i++) {
       newLi = $("<li>");
       newLi.text(arr[i]);
-      newLi.attr("data-array-index", i)
+      newLi.attr("data-array-index", i);
+      camelId = camelize(arr[i]);
+      newLi.attr("data-div-id", camelId)
       $("#exploreUl").append(newLi);
     }
   }
   function queryAPI(query) {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      query + "&limit=10&api_key=" + api;
+      query + "&limit=20&api_key=" + api;
     $.ajax({
       url: queryURL,
       method: "GET"
@@ -20,15 +22,16 @@ $(document).ready(function () {
       .then(function (response) {
         // storing the data from the AJAX request in the results variable
         var results = response.data;
+        camelQuery = camelize(query);
         // write title to HTML
-        var titleRow =  '<div id="' + query + '" class="row px4pc pt-5">';
+        var titleRow =  '<div id="' + camelQuery + '" class="row px4pc pt-5">';
             titleRow += '<div class="col-12 row-title">';
             titleRow += '<h4>' + query + '</h4>';
             titleRow +=  '</div></div>';
         var sliderSection = $("<section>");
             sliderSection.addClass("center slider");
-        var fullscreenSection = $("<section class='fullscreen' id='" + query + "FS'>");
-        var fssHtml = "<i data-section-id='" + query + "' class='fas fa-times'></i>";
+        var fullscreenSection = $("<section class='fullscreen' id='" + camelQuery + "FS'>");
+        var fssHtml = "<i data-section-id='" + camelQuery + "' class='fas fa-times'></i>";
             fssHtml += "<div id='fssMainContent'></div>";
             fullscreenSection.html(fssHtml);
 
@@ -51,7 +54,7 @@ $(document).ready(function () {
           // console.log(results[i]);  
           var html = "<div class='overlayContent'><h5>" + title + "</h5>";   
           html += "<span class='maturity'>" +  results[i].rating  + "</span>";
-          html += "<svg class='down-arrow' data-gif-id='" + results[i].id + "' data-section-id='" + query + "' width='45px' height='15px'><polyline fill='none' stroke='#FFFFFF' stroke-width='1' stroke-miterlimit='10' points='0.846,1.404 21.783,13.537 42.833,1.404 '/></svg>";
+          html += "<svg class='down-arrow' data-gif-id='" + results[i].id + "' data-section-id='" + camelQuery + "' width='45px' height='15px'><polyline fill='none' stroke='#FFFFFF' stroke-width='1' stroke-miterlimit='10' points='0.846,1.404 21.783,13.537 42.833,1.404 '/></svg>";
           html += "</div>";
           overlayDiv.html(html);          
           newDiv.append(overlayDiv);
@@ -71,10 +74,17 @@ $(document).ready(function () {
       });
       
   }  
+  // camelize search strings 
+  function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+      if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+      return index == 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  }
   // remove "GIF" and "By.." from Title
   function cleanTitle(str) {
-    if(str.indexOf("by") > 0){
-      str = str.substr(0, str.lastIndexOf("by"));
+    if(str.indexOf("by ") > 0){
+      str = str.substr(0, str.lastIndexOf("by "));
     }          
     str = str.replace(/gif/gi, " ");
     return str;
@@ -113,7 +123,7 @@ $(document).ready(function () {
     $("#" + sectionID + "FS").fadeOut();
   });
   $(document.body).on('click', '#exploreUl li', function () {      
-    var divId = $(this).text();
+    var divId = $(this).attr("data-div-id");
     var targetOffset = $("#" + divId).offset().top - 60;
       $('html, body').animate({
         scrollTop: targetOffset
@@ -155,6 +165,7 @@ $(document).ready(function () {
       date = date.toLocaleDateString("en-US", options);
       console.log(result);
       var fssMCHtml = "<div id='fssMCDesc'><h1>" + title +"</h1>";
+          fssMCHtml += "<h2>Rated <span class='maturity fsMaturity'>" + result.rating + "</span>"
           fssMCHtml += "<h4>Source: ";
           fssMCHtml += "<a href='" + result.source_post_url + "' target='_blank'>" + result.source_tld +"</a></h4>";
           fssMCHtml += "<h6>Uploaded: " + date  + "</h6>";
