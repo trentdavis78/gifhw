@@ -206,6 +206,16 @@ body {
     color: #fff;
     opacity: 0;
 }
+.transitionDisable, .slick-slide.transitionDisable img {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    -ms-transition: none;    
+    -webkit-transform: none; 
+    -moz-transform: none;
+    -o-transform: none;
+    transform: none; 
+}
 .overlayContent {
     position: absolute;
     bottom: 0;
@@ -263,6 +273,15 @@ body {
 }
 #fssMCDesc h1 {
     text-transform: capitalize;
+}
+#fssMCDesc h4 {
+    display: inline;
+}
+#fssMCDesc h6:first-of-type {
+    margin-top: 1rem;
+}
+#fssMCDesc a {
+    color: #828282;
 }
 #fssMCImg {
     float: right;

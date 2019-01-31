@@ -96,12 +96,16 @@ $(document).ready(function () {
   });
   $(document.body).on('click', '.down-arrow', function () {    
     $(".fullscreen").fadeOut();
+    $(".overlayDiv").addClass("transitionDisable");   
+    $(".slick-slide").addClass("transitionDisable");  
     var gifID =  $(this).attr("data-gif-id");      
     var sectionID = $(this).attr("data-section-id");    
     fullscreenQuery(gifID, sectionID);
     $("#" + sectionID + "FS").fadeIn();
   });
-  $(document.body).on('click', '.fa-times', function () {           
+  $(document.body).on('click', '.fa-times', function () {      
+    $(".overlayDiv").removeClass("transitionDisable");   
+    $(".slick-slide").removeClass("transitionDisable");      
     var sectionID = $(this).attr("data-section-id");
     $("#" + sectionID + "FS").fadeOut();
   });
@@ -134,8 +138,19 @@ $(document).ready(function () {
     .then(function (response) { 
       var result = response.data;
       var title = cleanTitle(result.title);
+      var size =parseInt(result.images.original.size)/1000000;
+      size = Math.round(size * 100) / 100;
+      var options = { year: 'numeric', month: 'long', day: 'numeric' };
+      var date = new Date(result.import_datetime);
+      date = date.toLocaleDateString("en-US", options);
       console.log(result);
-      var fssMCHtml = "<div id='fssMCDesc'><h1>" + title +"</h1></div>"
+      var fssMCHtml = "<div id='fssMCDesc'><h1>" + title +"</h1>";
+          fssMCHtml += "<h4>Source: ";
+          fssMCHtml += "<a href='" + result.source_post_url + "' target='_blank'>" + result.source_tld +"</a></h4>";
+          fssMCHtml += "<h6>Uploaded: " + date  + "</h6>";
+          fssMCHtml += "<h6>Dimensions: " + result.images.original.width + " x " +  result.images.original.height + " px</h6>";
+          fssMCHtml += "<h6>Size: " + size + " MB</h6>";          
+          fssMCHtml += "</div>";
           fssMCHtml += "<div id='fssMCImg'><div id='ImgGradient'></div><img src='" + result.images.original.url+ "'></div>";
       $("#" + sectionID + "FS").find("#fssMainContent").html(fssMCHtml);
     });
