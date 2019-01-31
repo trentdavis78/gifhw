@@ -4,10 +4,12 @@ $(document).ready(function () {
   function printCategories(arr) {
     for (i = 0; i < arr.length; i++) {
       newLi = $("<li>");
-      newLi.text(arr[i]);
+      var cleanString = removeSpecialChars(arr[i]);
+      cleanString = cleanString.toLowerCase();
+      newLi.text(cleanString);
       newLi.attr("data-array-index", i);
-      camelId = camelize(arr[i]);
-      newLi.attr("data-div-id", camelId)
+      divId = camelize(cleanString);      
+      newLi.attr("data-div-id", divId)
       $("#exploreUl").append(newLi);
     }
   }
@@ -22,16 +24,19 @@ $(document).ready(function () {
       .then(function (response) {
         // storing the data from the AJAX request in the results variable
         var results = response.data;
-        camelQuery = camelize(query);
+        query = camelize(query);
+        query = query.toLowerCase();
+        cleanString = removeSpecialChars(query);
+        
         // write title to HTML
-        var titleRow =  '<div id="' + camelQuery + '" class="row px4pc pt-5">';
+        var titleRow =  '<div id="' + cleanString + '" class="row px4pc pt-5">';
             titleRow += '<div class="col-12 row-title">';
-            titleRow += '<h4>' + query + '</h4>';
+            titleRow += '<h4>' + cleanString + '</h4>';
             titleRow +=  '</div></div>';
         var sliderSection = $("<section>");
             sliderSection.addClass("center slider");
-        var fullscreenSection = $("<section class='fullscreen' id='" + camelQuery + "FS'>");
-        var fssHtml = "<i data-section-id='" + camelQuery + "' class='fas fa-times'></i>";
+        var fullscreenSection = $("<section class='fullscreen' id='" + cleanString + "FS'>");
+        var fssHtml = "<i data-section-id='" + cleanString + "' class='fas fa-times'></i>";
             fssHtml += "<div id='fssMainContent'></div>";
             fullscreenSection.html(fssHtml);
 
@@ -54,7 +59,7 @@ $(document).ready(function () {
           // console.log(results[i]);  
           var html = "<div class='overlayContent'><h5>" + title + "</h5>";   
           html += "<span class='maturity'>" +  results[i].rating  + "</span>";
-          html += "<svg class='down-arrow' data-gif-id='" + results[i].id + "' data-section-id='" + camelQuery + "' width='45px' height='15px'><polyline fill='none' stroke='#FFFFFF' stroke-width='1' stroke-miterlimit='10' points='0.846,1.404 21.783,13.537 42.833,1.404 '/></svg>";
+          html += "<svg class='down-arrow' data-gif-id='" + results[i].id + "' data-section-id='" + cleanString + "' width='45px' height='15px'><polyline fill='none' stroke='#FFFFFF' stroke-width='1' stroke-miterlimit='10' points='0.846,1.404 21.783,13.537 42.833,1.404 '/></svg>";
           html += "</div>";
           overlayDiv.html(html);          
           newDiv.append(overlayDiv);
@@ -81,6 +86,11 @@ $(document).ready(function () {
       return index == 0 ? match.toLowerCase() : match.toUpperCase();
     });
   }
+  // remove special chars 
+  function removeSpecialChars(str) {
+    str = str.replace(/[^a-zA-Z 0-9]+/g,"");
+    return str;
+    }
   // remove "GIF" and "By.." from Title
   function cleanTitle(str) {
     if(str.indexOf("by ") > 0){
