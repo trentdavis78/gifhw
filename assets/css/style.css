@@ -317,4 +317,9 @@ body {
     height: 250px;
     max-width: 980px;
     margin: 20px auto 0;
+    text-align: center;    
+}
+.footer p {
+    position: relative;
+    top: 240px;
 }
