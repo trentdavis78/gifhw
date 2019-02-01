@@ -1,6 +1,8 @@
 $(document).ready(function () {
   var api = "EFpmfS0tkulMhfgMKidEgbG0MutwWY6A";
+  //initial array of categories 
   var categoryArray = ["Movies", "Television", "Music", "Sports", "Geography", "Animals"];
+  // prints out categories when called
   function printCategories(arr) {
     for (i = 0; i < arr.length; i++) {
       newLi = $("<li>");
@@ -13,6 +15,7 @@ $(document).ready(function () {
       $("#exploreUl").append(newLi);
     }
   }
+  // api query to pull images for rows 
   function queryAPI(query) {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       query + "&limit=20&api_key=" + api;
@@ -21,8 +24,7 @@ $(document).ready(function () {
       method: "GET"
     })
       // After data comes back from the request
-      .then(function (response) {
-        // storing the data from the AJAX request in the results variable
+      .then(function (response) {        
         var results = response.data;
         query = camelize(query);
         query = query.toLowerCase();
@@ -40,7 +42,7 @@ $(document).ready(function () {
             fssHtml += "<div id='fssMainContent'></div>";
             fullscreenSection.html(fssHtml);
 
-        // Looping through each result item
+        // Looping through each result item and spitting out HTML
         for (var i = 0; i < results.length; i++) {
           var newDiv = $("<div>");
           newDiv.addClass("pr-1");
@@ -56,7 +58,6 @@ $(document).ready(function () {
           var width =  results[i].images.fixed_height.width;
           overlayDiv.css({"width": width});
           var title = cleanTitle(results[i].title);
-          // console.log(results[i]);  
           var html = "<div class='overlayContent'><h5>" + title + "</h5>";   
           html += "<span class='maturity'>" +  results[i].rating  + "</span>";
           html += "<svg class='down-arrow' data-gif-id='" + results[i].id + "' data-section-id='" + cleanString + "' width='45px' height='15px'><polyline fill='none' stroke='#FFFFFF' stroke-width='1' stroke-miterlimit='10' points='0.846,1.404 21.783,13.537 42.833,1.404 '/></svg>";
@@ -66,16 +67,17 @@ $(document).ready(function () {
           $(sliderSection).prepend(newDiv);
           
         }
+        // attach slick slider to the row
         $(sliderSection).slick({          
           infinite: true,
           speed: 300,
           slidesToShow: 1,
           variableWidth: true
         });
+        // prepend all HTML to divs
         $("#gifWrapper").prepend(fullscreenSection);
         $("#gifWrapper").prepend(sliderSection);
         $("#gifWrapper").prepend(titleRow);
-        // $("#" + query + "FS").fadeOut();        
       });
       
   }  
@@ -86,7 +88,7 @@ $(document).ready(function () {
       return index == 0 ? match.toLowerCase() : match.toUpperCase();
     });
   }
-  // remove special chars 
+  // remove special chars from strings
   function removeSpecialChars(str) {
     str = str.replace(/[^a-zA-Z 0-9]+/g,"");
     return str;
